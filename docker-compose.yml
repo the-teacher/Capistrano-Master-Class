@@ -1,0 +1,32 @@
+services:
+  ruby_dev:
+    build:
+      context: .
+      dockerfile: rubydev.Dockerfile
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./TestApp:/app/TestApp
+      - ./DeployTool:/app/DeployTool
+    ports:
+      - 3000:3000
+
+  deploy_server:
+    build:
+      context: .
+      dockerfile: ./server.Dockerfile
+    tty: true
+    working_dir: /app
+    networks:
+      deploy_server_network:
+        ipv4_address: 172.30.0.10
+    ports:
+      - 2222:22
+      - 4000:4000
+
+networks:
+  deploy_server_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
