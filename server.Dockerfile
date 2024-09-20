@@ -1,9 +1,14 @@
 # Base image Ubuntu
 FROM ubuntu:24.04
 
-# Install SSH server and other required packages
+#####################################################################
+# Install common packages
+#####################################################################
+
+# Update the package repository
 RUN apt-get update
 
+# Install basic dependencies
 RUN apt-get install -y build-essential
 
 ##################################################
@@ -47,6 +52,13 @@ RUN gem install rack
 
 # Install puma gem
 RUN gem install puma
+
+#####################################################################
+# Install Git for Capistrano
+#####################################################################
+
+# Install Git
+RUN apt-get install -y git
 
 ##################################################
 # Common settings

@@ -1,3 +1,24 @@
+start:
+	docker compose up -d
+
+stop:
+	docker compose down
+
+restart:
+	make stop
+	make start
+
+build:
+	make ruby_dev_build
+	make server_build
+
+rebuild:
+	make ruby_dev_rebuild
+	make server_rebuild
+
+status:
+	docker compose ps -a --no-trunc --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"
+
 ###############################################################
 # RUBY DEVELOPMENT CONTAINER
 ###############################################################
@@ -44,6 +65,10 @@ server_ssh_password_checks:
 	docker compose exec deploy_server cat /etc/ssh/sshd_config | grep PasswordAuthentication
 	docker compose exec deploy_server cat /etc/ssh/sshd_config | grep PubkeyAuthentication
 	docker compose exec deploy_server cat /etc/ssh/sshd_config | grep PermitEmptyPasswords
+
+###############################################################
+# Service commands
+###############################################################
 
 # `-o StrictHostKeyChecking=no` to skip the prompt to add the server to the list of known hosts
 ssh_connect:

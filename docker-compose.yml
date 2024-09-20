@@ -5,6 +5,9 @@ services:
       dockerfile: rubydev.Dockerfile
     tty: true
     working_dir: /app
+    networks:
+      deploy_server_network:
+        ipv4_address: 172.30.0.9
     volumes:
       - ./TestApp:/app/TestApp
       - ./DeployTool:/app/DeployTool
@@ -20,6 +23,8 @@ services:
     networks:
       deploy_server_network:
         ipv4_address: 172.30.0.10
+    volumes:
+      - ./DeployServer:/app/DeployServer
     ports:
       - 2222:22
       - 4000:4000
