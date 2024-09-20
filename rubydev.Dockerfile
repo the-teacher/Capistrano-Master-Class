@@ -24,6 +24,14 @@ RUN gem install rack
 # Install puma gem
 RUN gem install puma
 
+# Install bundler gem
+RUN gem install bundler
+
+# Copy Gemfile and Gemfile.lock to install gems via bundler
+COPY DeployTool/Gemfile /app/Gemfile
+COPY DeployTool/Gemfile.lock /app/Gemfile.lock
+RUN cd /app && bundle install
+
 #####################################################################
 # Install ssh client
 #####################################################################
